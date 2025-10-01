@@ -1,0 +1,310 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  CONTENT_ADMIN
+  MATCH_ADMIN
+  MERCH_ADMIN
+  FINANCE
+  MODERATOR
+  USER
+}
+
+enum Status {
+  ACTIVE
+  SUSPENDED
+}
+
+enum ArticleStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+}
+
+enum PageStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum MatchStatus {
+  SCHEDULED
+  LIVE
+  FINISHED
+  POSTPONED
+}
+
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum PollStatus {
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
+enum CouponType {
+  PERCENT
+  AMOUNT
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum RefType {
+  ARTICLE
+  PRODUCT
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  PACKED
+  SHIPPED
+  COMPLETED
+  CANCELED
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  role         Role      @default(USER)
+  status       Status    @default(ACTIVE)
+  createdAt    DateTime  @default(now())
+  auditLogs    AuditLog[]
+  comments     Comment[]
+  orders       Order[]
+  articles     Article[]
+}
+
+model Article {
+  id          String            @id @default(cuid())
+  title       String
+  slug        String            @unique
+  excerpt     String?
+  body        String
+  coverUrl    String?
+  status      ArticleStatus     @default(DRAFT)
+  authorId    String
+  author      User              @relation(fields: [authorId], references: [id])
+  publishedAt DateTime?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  categories  ArticleCategory[]
+}
+
+model Page {
+  id          String     @id @default(cuid())
+  title       String
+  slug        String     @unique
+  body        String
+  status      PageStatus @default(DRAFT)
+  publishedAt DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Category {
+  id    String           @id @default(cuid())
+  name  String           @unique
+  slug  String           @unique
+  posts ArticleCategory[]
+}
+
+model ArticleCategory {
+  articleId  String
+  categoryId String
+  article    Article @relation(fields: [articleId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+  @@id([articleId, categoryId])
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  url       String
+  type      String
+  width     Int?
+  height    Int?
+  alt       String?
+  createdBy String
+  createdAt DateTime @default(now())
+}
+
+model Match {
+  id            String      @id @default(cuid())
+  opponent      String
+  eventDate     DateTime
+  venue         String
+  competition   String
+  status        MatchStatus @default(SCHEDULED)
+  scoreHome     Int?
+  scoreAway     Int?
+  highlightText String?
+  highlightUrl  String?
+  createdAt     DateTime    @default(now())
+}
+
+model Product {
+  id          String           @id @default(cuid())
+  name        String
+  slug        String           @unique
+  description String?
+  basePrice   Int
+  status      ProductStatus    @default(ACTIVE)
+  coverUrl    String?
+  variants    ProductVariant[]
+  createdAt   DateTime         @default(now())
+}
+
+model ProductVariant {
+  id         String  @id @default(cuid())
+  productId  String
+  product    Product @relation(fields: [productId], references: [id])
+  sku        String  @unique
+  optionJson Json
+  stock      Int     @default(0)
+  price      Int
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+}
+
+model Coupon {
+  id         String   @id @default(cuid())
+  code       String   @unique
+  type       CouponType
+  value      Int
+  minSpend   Int?
+  startsAt   DateTime?
+  endsAt     DateTime?
+  usageLimit Int?
+  used       Int      @default(0)
+  orders     Order[]
+}
+
+model Comment {
+  id        String         @id @default(cuid())
+  userId    String
+  user      User           @relation(fields: [userId], references: [id])
+  refType   RefType
+  refId     String
+  body      String
+  status    CommentStatus  @default(PENDING)
+  createdAt DateTime       @default(now())
+}
+
+model Cart {
+  id        String    @id @default(cuid())
+  userId    String
+  createdAt DateTime  @default(now())
+  items     CartItem[]
+}
+
+model CartItem {
+  id               String         @id @default(cuid())
+  cartId           String
+  cart             Cart           @relation(fields: [cartId], references: [id])
+  productVariantId String
+  variant          ProductVariant @relation(fields: [productVariantId], references: [id])
+  qty              Int
+}
+
+model Order {
+  id                 String   @id @default(cuid())
+  userId             String
+  user               User     @relation(fields: [userId], references: [id])
+  couponId           String?
+  coupon             Coupon?  @relation(fields: [couponId], references: [id])
+  total              Int
+  discount           Int      @default(0)
+  finalTotal         Int
+  status             OrderStatus @default(PENDING)
+  paymentMethod      String
+  paymentRef         String?
+  shippingAddressJson Json?
+  createdAt          DateTime @default(now())
+  items              OrderItem[]
+  shipment           Shipment?
+}
+
+model OrderItem {
+  id               String         @id @default(cuid())
+  orderId          String
+  order            Order          @relation(fields: [orderId], references: [id])
+  productVariantId String
+  variant          ProductVariant @relation(fields: [productVariantId], references: [id])
+  qty              Int
+  price            Int
+}
+
+model Shipment {
+  id             String @id @default(cuid())
+  orderId        String @unique
+  order          Order  @relation(fields: [orderId], references: [id])
+  courier        String?
+  trackingNumber String?
+  shippedAt      DateTime?
+}
+
+model Poll {
+  id          String    @id @default(cuid())
+  question    String
+  optionsJson Json
+  startsAt    DateTime?
+  endsAt      DateTime?
+  status      PollStatus @default(ACTIVE)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  votes       PollVote[]
+}
+
+model PollVote {
+  id        String   @id @default(cuid())
+  pollId    String
+  poll      Poll     @relation(fields: [pollId], references: [id])
+  userId    String?
+  ipHash    String?
+  optionKey String
+  createdAt DateTime @default(now())
+}
+
+model Volunteer {
+  id       String  @id @default(cuid())
+  name     String
+  email    String
+  phone    String?
+  skills   String?
+  notes    String?
+  status   String  @default("NEW")
+  createdAt DateTime @default(now())
+}
+
+model NewsletterSubscriber {
+  id        String  @id @default(cuid())
+  email     String  @unique
+  createdAt DateTime @default(now())
+  verified  Boolean @default(false)
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String
+  actor     User?    @relation(fields: [actorId], references: [id])
+  action    String
+  targetType String
+  targetId  String
+  metaJson  Json?
+  createdAt DateTime @default(now())
+}
