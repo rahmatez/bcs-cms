@@ -4,13 +4,13 @@ import { hash } from "bcrypt";
 const prisma = new PrismaClient();
 
 async function main() {
-  const passwordHash = await hash("password123", 10);
+  const passwordHash = await hash("admin123", 10);
 
   const superAdmin = await prisma.user.upsert({
-    where: { email: "admin@bcs.test" },
+    where: { email: "admin@bcs.com" },
     update: {},
     create: {
-      email: "admin@bcs.test",
+      email: "admin@bcs.com",
       name: "Super Admin",
       passwordHash,
       role: "SUPER_ADMIN",
@@ -176,7 +176,7 @@ async function main() {
     }
   });
 
-  console.log("Seed data created. Credentials: admin@bcs.test / password123");
+  console.log("Seed data created. Credentials: admin@bcs.com / admin123");
 }
 
 main()

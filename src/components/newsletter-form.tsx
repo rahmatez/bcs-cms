@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Mail, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 
 export function NewsletterForm() {
@@ -21,7 +22,7 @@ export function NewsletterForm() {
     setLoading(false);
 
     if (response.ok) {
-      toast.success("Berhasil berlangganan buletin BCS!");
+      toast.success("🎉 Berhasil! Cek email kamu untuk konfirmasi.");
       setEmail("");
     } else {
       const data = await response.json();
@@ -30,21 +31,25 @@ export function NewsletterForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row">
-      <input
-        type="email"
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        placeholder="Email kamu"
-        className="flex-1 rounded-md border border-neutral-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
-        required
-      />
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+      <div className="relative flex items-center">
+        <Mail className="absolute left-4 h-5 w-5 text-neutral-400" />
+        <input
+          type="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          placeholder="Masukkan email kamu"
+          className="w-full rounded-xl border-2 border-white/20 bg-white/10 px-12 py-4 text-white placeholder:text-neutral-400 focus:border-primary-500 focus:bg-white/20 focus:outline-none transition-all"
+          required
+        />
+      </div>
       <button
         type="submit"
         disabled={loading}
-        className="button-base bg-primary text-primary-foreground hover:bg-primary/90"
+        className="group flex items-center justify-center gap-2 rounded-xl bg-primary-500 px-6 py-4 font-bold text-black transition-all hover:bg-primary-400 hover:shadow-lg hover:gap-4 disabled:opacity-50"
       >
-        {loading ? "Mengirim..." : "Gabung"}
+        {loading ? "Memproses..." : "Subscribe Sekarang"}
+        <ArrowRight className="h-5 w-5 transition-transform" />
       </button>
     </form>
   );

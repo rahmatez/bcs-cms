@@ -8,8 +8,8 @@ import Link from "next/link";
 export default function LoginPage() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/admin";
-  const [email, setEmail] = useState("admin@bcs.test");
-  const [password, setPassword] = useState("Admin123!");
+  const [email, setEmail] = useState("admin@bcs.com");
+  const [password, setPassword] = useState("admin123");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,20 +18,32 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
-    const response = await signIn("credentials", {
-      email,
-      password,
-      callbackUrl,
-      redirect: false
-    });
+    try {
+      const response = await signIn("credentials", {
+        email,
+        password,
+        redirect: false
+      });
 
-    if (response?.error) {
-      setError("Login gagal. Periksa email dan password.");
+      if (response?.error) {
+        console.error("Login error:", response.error);
+        setError("Login gagal. Periksa email dan password.");
+        setLoading(false);
+        return;
+      }
+
+      if (response?.ok) {
+        // Redirect manually after successful login
+        window.location.href = callbackUrl;
+      } else {
+        setError("Login gagal. Terjadi kesalahan tidak terduga.");
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error("Login exception:", err);
+      setError("Login gagal. Terjadi kesalahan sistem.");
       setLoading(false);
-      return;
     }
-
-    window.location.href = response?.url ?? callbackUrl;
   };
 
   return (

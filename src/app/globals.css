@@ -2,18 +2,105 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: light;
+@layer base {
+  :root {
+    --font-display: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-body: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * {
+    @apply border-neutral-200;
+  }
+
+  body {
+    @apply bg-white text-neutral-900 font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold;
+  }
 }
 
-body {
-  @apply bg-white text-neutral-900 font-body;
+@layer components {
+  .button-base {
+    @apply inline-flex items-center justify-center rounded-lg px-6 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .button-primary {
+    @apply button-base bg-primary text-primary-foreground hover:bg-primary-600 hover:shadow-lg hover:scale-105 active:scale-100;
+  }
+
+  .button-secondary {
+    @apply button-base bg-dark text-white hover:bg-dark-200 hover:shadow-lg hover:scale-105 active:scale-100;
+  }
+
+  .button-outline {
+    @apply button-base border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground hover:shadow-lg hover:scale-105 active:scale-100;
+  }
+
+  .button-ghost {
+    @apply button-base hover:bg-neutral-100 hover:text-primary;
+  }
+
+  .card {
+    @apply rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary-200;
+  }
+
+  .card-dark {
+    @apply rounded-2xl border border-neutral-800 bg-dark-100 p-6 shadow-sm transition-all duration-300 hover:shadow-2xl hover:border-primary-500;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary-100 text-primary-800;
+  }
+
+  .badge-success {
+    @apply badge bg-green-100 text-green-800;
+  }
+
+  .badge-warning {
+    @apply badge bg-yellow-100 text-yellow-800;
+  }
+
+  .badge-danger {
+    @apply badge bg-red-100 text-red-800;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl;
+  }
+
+  .section-subtitle {
+    @apply mt-4 text-lg text-neutral-600 sm:text-xl;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-600 via-primary-500 to-primary-400 bg-clip-text text-transparent;
+  }
+
+  .link-hover {
+    @apply relative inline-block transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:text-primary hover:after:w-full;
+  }
 }
 
-a {
-  @apply text-primary underline-offset-4 hover:underline;
-}
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
 
-.button-base {
-  @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+
+  .glass {
+    @apply bg-white/80 backdrop-blur-md;
+  }
+
+  .glass-dark {
+    @apply bg-dark/80 backdrop-blur-md;
+  }
 }

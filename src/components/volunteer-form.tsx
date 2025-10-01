@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 
 export function VolunteerForm() {
@@ -25,7 +26,7 @@ export function VolunteerForm() {
     setLoading(false);
 
     if (response.ok) {
-      toast.success("Terima kasih! Tim kami akan menghubungi segera.");
+      toast.success("🎉 Terima kasih! Tim kami akan menghubungi segera.");
       setForm({ name: "", email: "", phone: "", skills: "", notes: "" });
     } else {
       const data = await response.json();
@@ -35,23 +36,24 @@ export function VolunteerForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
-          <label htmlFor="vol-name" className="text-sm font-medium text-neutral-100">
-            Nama lengkap
+          <label htmlFor="vol-name" className="text-sm font-semibold text-white">
+            Nama Lengkap <span className="text-primary-400">*</span>
           </label>
           <input
             id="vol-name"
             name="name"
             value={form.name}
             onChange={handleChange}
-            className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+            placeholder="John Doe"
+            className="w-full rounded-xl border-2 border-white/20 bg-white/10 px-4 py-3 text-white placeholder:text-neutral-500 focus:border-primary-500 focus:bg-white/20 focus:outline-none transition-all"
             required
           />
         </div>
         <div className="space-y-2">
-          <label htmlFor="vol-email" className="text-sm font-medium text-neutral-100">
-            Email
+          <label htmlFor="vol-email" className="text-sm font-semibold text-white">
+            Email <span className="text-primary-400">*</span>
           </label>
           <input
             id="vol-email"
@@ -59,14 +61,16 @@ export function VolunteerForm() {
             name="email"
             value={form.email}
             onChange={handleChange}
-            className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+            placeholder="john@example.com"
+            className="w-full rounded-xl border-2 border-white/20 bg-white/10 px-4 py-3 text-white placeholder:text-neutral-500 focus:border-primary-500 focus:bg-white/20 focus:outline-none transition-all"
             required
           />
         </div>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
+      
+      <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
-          <label htmlFor="vol-phone" className="text-sm font-medium text-neutral-100">
+          <label htmlFor="vol-phone" className="text-sm font-semibold text-white">
             Nomor WhatsApp
           </label>
           <input
@@ -74,25 +78,28 @@ export function VolunteerForm() {
             name="phone"
             value={form.phone}
             onChange={handleChange}
-            className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+            placeholder="08123456789"
+            className="w-full rounded-xl border-2 border-white/20 bg-white/10 px-4 py-3 text-white placeholder:text-neutral-500 focus:border-primary-500 focus:bg-white/20 focus:outline-none transition-all"
           />
         </div>
         <div className="space-y-2">
-          <label htmlFor="vol-skills" className="text-sm font-medium text-neutral-100">
-            Keahlian/minat
+          <label htmlFor="vol-skills" className="text-sm font-semibold text-white">
+            Keahlian/Minat
           </label>
           <input
             id="vol-skills"
             name="skills"
             value={form.skills}
             onChange={handleChange}
-            className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+            placeholder="Fotografi, Desain, dll"
+            className="w-full rounded-xl border-2 border-white/20 bg-white/10 px-4 py-3 text-white placeholder:text-neutral-500 focus:border-primary-500 focus:bg-white/20 focus:outline-none transition-all"
           />
         </div>
       </div>
+      
       <div className="space-y-2">
-        <label htmlFor="vol-notes" className="text-sm font-medium text-neutral-100">
-          Ceritakan singkat motivasi kamu
+        <label htmlFor="vol-notes" className="text-sm font-semibold text-white">
+          Ceritakan Motivasi Kamu
         </label>
         <textarea
           id="vol-notes"
@@ -100,15 +107,18 @@ export function VolunteerForm() {
           value={form.notes}
           onChange={handleChange}
           rows={4}
-          className="w-full rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+          placeholder="Kenapa kamu ingin bergabung sebagai volunteer..."
+          className="w-full rounded-xl border-2 border-white/20 bg-white/10 px-4 py-3 text-white placeholder:text-neutral-500 focus:border-primary-500 focus:bg-white/20 focus:outline-none transition-all resize-none"
         />
       </div>
+      
       <button
         type="submit"
         disabled={loading}
-        className="button-base w-full bg-primary text-primary-foreground hover:bg-primary/90"
+        className="group flex w-full items-center justify-center gap-2 rounded-xl bg-primary-500 px-6 py-4 font-bold text-black transition-all hover:bg-primary-400 hover:shadow-lg hover:gap-4 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {loading ? "Mengirim..." : "Gabung sebagai volunteer"}
+        {loading ? "Mengirim..." : "Gabung Sebagai Volunteer"}
+        <ArrowRight className="h-5 w-5 transition-transform" />
       </button>
     </form>
   );

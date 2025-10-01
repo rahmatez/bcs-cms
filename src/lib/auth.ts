@@ -8,7 +8,7 @@ import { Role, Status } from "@prisma/client";
 
 const credentialsSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(6)
+  password: z.string().min(3) // Allow shorter passwords for testing
 });
 
 export const {
@@ -17,8 +17,11 @@ export const {
   signIn,
   signOut
 } = NextAuth({
+  debug: process.env.NODE_ENV === "development",
+  trustHost: true,
   session: {
-    strategy: "jwt"
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60 // 30 days
   },
   pages: {
     signIn: "/auth/login"
