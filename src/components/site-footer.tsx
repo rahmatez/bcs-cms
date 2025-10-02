@@ -1,49 +1,36 @@
 import Link from "next/link";
-import { Facebook, Twitter, Instagram, Youtube, Mail, MapPin, Phone } from "lucide-react";
+import { Facebook, Twitter, Instagram, Youtube } from "lucide-react";
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-dark text-neutral-200">
+    <footer className="bg-neutral-900 border-t border-neutral-700 text-neutral-300">
       {/* Main Footer */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-2">
           {/* Brand Section */}
           <div className="lg:col-span-2">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg">
-                <span className="text-2xl font-black text-black">BC</span>
+            <Link href="/" className="inline-flex items-center space-x-3 mb-4 group">
+              <div className="h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg group-hover:scale-110 transition-transform">
+                <span className="text-2xl font-black text-white">BCS</span>
               </div>
-              <div>
-                <div className="font-display text-2xl font-black uppercase tracking-tight text-white">
-                  Brigata Curva Sud
-                </div>
-                <div className="text-sm font-semibold uppercase tracking-wider text-primary-400">
-                  Official Website
-                </div>
-              </div>
-            </div>
-            <p className="text-sm text-neutral-400 max-w-md mb-6">
-              Komunitas supporter yang berdedikasi untuk mendukung tim kebanggaan Yogyakarta. 
-              Bersatu dalam semangat, loyalitas, dan kebanggaan.
+            </Link>
+            <p className="text-sm text-neutral-400 max-w-md mb-6 leading-relaxed">
+              Our vision is to provide the best service and share the best experience for many people. 
+              Together we support our beloved team with passion and pride.
             </p>
             
-            {/* Social Media */}
+            {/* Social Media - Follow Us */}
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4">
+              Follow us
+            </h3>
             <div className="flex gap-3">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-lg bg-dark-200 text-neutral-400 transition-all duration-200 hover:bg-primary-500 hover:text-black hover:scale-110"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
               <a
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-lg bg-dark-200 text-neutral-400 transition-all duration-200 hover:bg-primary-500 hover:text-black hover:scale-110"
+                className="flex h-10 w-10 items-center justify-center rounded-lg bg-neutral-800 text-neutral-300 transition-all duration-200 hover:bg-primary hover:text-white hover:scale-110"
               >
                 <Twitter className="h-5 w-5" />
               </a>
@@ -51,7 +38,7 @@ export function SiteFooter() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-lg bg-dark-200 text-neutral-400 transition-all duration-200 hover:bg-primary-500 hover:text-black hover:scale-110"
+                className="flex h-10 w-10 items-center justify-center rounded-lg bg-neutral-800 text-neutral-300 transition-all duration-200 hover:bg-primary hover:text-white hover:scale-110"
               >
                 <Instagram className="h-5 w-5" />
               </a>
@@ -59,61 +46,60 @@ export function SiteFooter() {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-lg bg-dark-200 text-neutral-400 transition-all duration-200 hover:bg-primary-500 hover:text-black hover:scale-110"
+                className="flex h-10 w-10 items-center justify-center rounded-lg bg-neutral-800 text-neutral-300 transition-all duration-200 hover:bg-primary hover:text-white hover:scale-110"
               >
                 <Youtube className="h-5 w-5" />
+              </a>
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-10 w-10 items-center justify-center rounded-lg bg-neutral-800 text-neutral-300 transition-all duration-200 hover:bg-primary hover:text-white hover:scale-110"
+              >
+                <Facebook className="h-5 w-5" />
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* About Links */}
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4">
-              Quick Links
+              About
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/news" className="text-sm text-neutral-400 hover:text-primary-400 transition-colors duration-200">
-                  News & Articles
-                </Link>
-              </li>
-              <li>
-                <Link href="/matches" className="text-sm text-neutral-400 hover:text-primary-400 transition-colors duration-200">
-                  Match Schedule
-                </Link>
-              </li>
-              <li>
-                <Link href="/store" className="text-sm text-neutral-400 hover:text-primary-400 transition-colors duration-200">
-                  Official Store
-                </Link>
-              </li>
-              <li>
-                <Link href="/pages/about" className="text-sm text-neutral-400 hover:text-primary-400 transition-colors duration-200">
+                <Link href="/pages/about" className="text-sm text-neutral-400 hover:text-white transition-colors duration-200">
                   About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/pages/gallery" className="text-sm text-neutral-400 hover:text-white transition-colors duration-200">
+                  Gallery
+                </Link>
+              </li>
+              <li>
+                <Link href="/news" className="text-sm text-neutral-400 hover:text-white transition-colors duration-200">
+                  News & Blog
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Support Links */}
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4">
-              Contact
+              Support
             </h3>
             <ul className="space-y-3">
-              <li className="flex items-start gap-3 text-sm text-neutral-400">
-                <MapPin className="h-5 w-5 text-primary-500 flex-shrink-0 mt-0.5" />
-                <span>Yogyakarta, Indonesia</span>
+              <li>
+                <Link href="/pages/faq" className="text-sm text-neutral-400 hover:text-white transition-colors duration-200">
+                  FAQs
+                </Link>
               </li>
-              <li className="flex items-start gap-3 text-sm text-neutral-400">
-                <Mail className="h-5 w-5 text-primary-500 flex-shrink-0 mt-0.5" />
-                <a href="mailto:halo@bcs.id" className="hover:text-primary-400 transition-colors duration-200">
-                  halo@bcs.id
-                </a>
-              </li>
-              <li className="flex items-start gap-3 text-sm text-neutral-400">
-                <Phone className="h-5 w-5 text-primary-500 flex-shrink-0 mt-0.5" />
-                <span>+62 XXX XXXX XXXX</span>
+              <li>
+                <Link href="/pages/contact" className="text-sm text-neutral-400 hover:text-white transition-colors duration-200">
+                  Contact Us
+                </Link>
               </li>
             </ul>
           </div>
@@ -121,20 +107,23 @@ export function SiteFooter() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-dark-200">
+      <div className="border-t border-neutral-700">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-neutral-400">
               © {currentYear} Brigata Curva Sud. All rights reserved.
             </p>
-            <nav className="flex gap-6 text-sm">
-              <Link href="/pages/privacy" className="text-neutral-400 hover:text-primary-400 transition-colors duration-200">
-                Privacy Policy
-              </Link>
-              <Link href="/pages/terms" className="text-neutral-400 hover:text-primary-400 transition-colors duration-200">
-                Terms of Service
-              </Link>
-            </nav>
+            <div className="flex gap-2 text-xs text-neutral-500">
+              <span>Build with love by</span>
+              <a 
+                href="https://example.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="font-semibold text-white hover:text-neutral-300 transition-colors"
+              >
+                Your Team
+              </a>
+            </div>
           </div>
         </div>
       </div>

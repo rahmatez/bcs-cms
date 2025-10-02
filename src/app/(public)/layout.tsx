@@ -3,9 +3,9 @@ import { SiteFooter } from "@/components/site-footer";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-neutral-900">
       <SiteHeader />
-      <main className="flex-1 bg-white">{children}</main>
+      <main className="flex-1">{children}</main>
       <SiteFooter />
     </div>
   );

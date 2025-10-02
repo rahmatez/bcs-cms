@@ -44,12 +44,12 @@ export function AddToCartForm({ variants }: { variants: VariantOption[] }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
-        <span className="text-sm font-medium text-neutral-600">Pilih varian</span>
+        <span className="text-sm font-medium text-neutral-300">Pilih varian</span>
         <div className="grid gap-2 sm:grid-cols-2">
           {variants.map((variant) => (
             <label
               key={variant.id}
-              className={`rounded-lg border px-3 py-3 text-sm transition ${variant.id === variantId ? "border-primary bg-primary/10" : "border-neutral-200 hover:border-primary"}`}
+              className={`rounded-lg border px-3 py-3 text-sm transition ${variant.id === variantId ? "border-primary bg-primary/20" : "border-neutral-700 hover:border-primary"}`}
             >
               <input
                 type="radio"
@@ -60,9 +60,9 @@ export function AddToCartForm({ variants }: { variants: VariantOption[] }) {
                 onChange={() => setVariantId(variant.id)}
               />
               <div className="flex flex-col">
-                <span className="font-semibold text-neutral-900">{variant.label}</span>
-                <span className="text-xs text-neutral-500">Stock: {variant.stock}</span>
-                <span className="mt-1 text-sm font-semibold text-neutral-900">
+                <span className="font-semibold text-white">{variant.label}</span>
+                <span className="text-xs text-neutral-400">Stock: {variant.stock}</span>
+                <span className="mt-1 text-sm font-semibold text-white">
                   {new Intl.NumberFormat("id-ID", {
                     style: "currency",
                     currency: "IDR",
@@ -76,7 +76,7 @@ export function AddToCartForm({ variants }: { variants: VariantOption[] }) {
       </div>
 
       <div className="flex items-center gap-3">
-        <label className="text-sm font-medium text-neutral-600" htmlFor="cart-qty">
+        <label className="text-sm font-medium text-neutral-300" htmlFor="cart-qty">
           Jumlah
         </label>
         <input
@@ -85,14 +85,14 @@ export function AddToCartForm({ variants }: { variants: VariantOption[] }) {
           min={1}
           value={qty}
           onChange={(event) => setQty(Number(event.target.value))}
-          className="w-20 rounded-md border border-neutral-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+          className="w-20 rounded-md border border-neutral-700 bg-neutral-700 px-3 py-2 text-sm text-white focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading || !selectedVariant}
-        className="button-base w-full bg-primary text-primary-foreground hover:bg-primary/90"
+        className="button-base w-full bg-primary text-white hover:bg-primary-600"
       >
         {loading ? "Menambahkan..." : "Tambah ke keranjang"}
       </button>

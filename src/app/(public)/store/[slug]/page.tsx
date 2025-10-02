@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-
+import Link from "next/link";
+import { PageHeroSlider } from "@/components/page-hero-slider";
 import { AddToCartForm } from "@/components/add-to-cart-form";
 import { getProductBySlug } from "@/server/services/store";
 
@@ -47,7 +48,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
   })) ?? [];
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-10 px-4 pb-16 pt-10 lg:grid-cols-[2fr,1fr] lg:px-0">
+    <>
+      <PageHeroSlider
+        title={product.name}
+        height="small"
+      />
+      
+      <div className="mx-auto max-w-6xl px-4 pb-16 pt-10 lg:px-0">
+        <Link href="/store" className="inline-block mb-8 text-sm text-secondary-600 hover:text-secondary-700">← Kembali ke Store</Link>
+        
+        <div className="grid gap-10 lg:grid-cols-[2fr,1fr]">
       <div className="space-y-6">
         {product.coverUrl ? (
           <div className="relative h-80 w-full overflow-hidden rounded-2xl">
@@ -60,31 +70,31 @@ export default async function ProductPage({ params }: ProductPageProps) {
             />
           </div>
         ) : (
-          <div className="flex h-80 w-full items-center justify-center rounded-2xl bg-neutral-100 text-sm text-neutral-500">
+          <div className="flex h-80 w-full items-center justify-center rounded-2xl bg-neutral-700 text-sm text-neutral-400">
             Tidak ada gambar produk
           </div>
         )}
 
         <div>
-          <h1 className="text-3xl font-semibold text-neutral-900">{product.name}</h1>
-          <p className="mt-3 text-sm leading-6 text-neutral-600">{product.description}</p>
+          <h1 className="text-3xl font-semibold text-white">{product.name}</h1>
+          <p className="mt-3 text-sm leading-6 text-neutral-400">{product.description}</p>
         </div>
 
         {approvedComments.length > 0 && (
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-neutral-900">Ulasan</h2>
+            <h2 className="text-lg font-semibold text-white">Ulasan</h2>
             <ul className="space-y-4">
               {approvedComments.map((comment) => (
-                <li key={comment.id} className="rounded-lg border border-neutral-200 p-4">
+                <li key={comment.id} className="rounded-lg border border-neutral-700 bg-neutral-800 p-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-neutral-800">{comment.authorName}</span>
-                    <time className="text-xs text-neutral-500">
+                    <span className="text-sm font-medium text-white">{comment.authorName}</span>
+                    <time className="text-xs text-neutral-400">
                       {new Intl.DateTimeFormat("id-ID", {
                         dateStyle: "medium"
                       }).format(comment.createdAt)}
                     </time>
                   </div>
-                  <p className="mt-2 text-sm text-neutral-600">{comment.body}</p>
+                  <p className="mt-2 text-sm text-neutral-300">{comment.body}</p>
                 </li>
               ))}
             </ul>
@@ -92,10 +102,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
         )}
       </div>
 
-      <aside className="space-y-6 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
+      <aside className="space-y-6 rounded-2xl border border-neutral-700 bg-neutral-800 p-6 shadow-sm">
         <div className="space-y-1">
-          <p className="text-sm text-neutral-500">Mulai dari</p>
-          <p className="text-2xl font-bold text-primary">
+          <p className="text-sm text-neutral-400">Mulai dari</p>
+          <p className="text-2xl font-bold text-secondary-600">
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
               currency: "IDR",
@@ -107,9 +117,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
         {variants.length > 0 ? (
           <AddToCartForm variants={variants} />
         ) : (
-          <p className="text-sm text-neutral-500">Varian produk tidak tersedia</p>
+          <p className="text-sm text-neutral-400">Varian produk tidak tersedia</p>
         )}
-      </aside>
-    </div>
+        </aside>
+        </div>
+      </div>
+    </>
   );
 }

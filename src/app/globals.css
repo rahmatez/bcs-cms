@@ -9,11 +9,11 @@
   }
 
   * {
-    @apply border-neutral-200;
+    @apply border-neutral-700;
   }
 
   body {
-    @apply bg-white text-neutral-900 font-body antialiased;
+    @apply bg-neutral-900 text-white font-body antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -39,11 +39,11 @@
   }
 
   .button-ghost {
-    @apply button-base hover:bg-neutral-100 hover:text-primary;
+    @apply button-base hover:bg-neutral-800 hover:text-primary;
   }
 
   .card {
-    @apply rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary-200;
+    @apply rounded-2xl border border-neutral-700 bg-neutral-800 p-6 shadow-sm transition-all duration-300 hover:shadow-xl hover:border-primary-500;
   }
 
   .card-dark {
@@ -97,10 +97,51 @@
   }
 
   .glass {
-    @apply bg-white/80 backdrop-blur-md;
+    @apply bg-neutral-900/80 backdrop-blur-md;
   }
 
   .glass-dark {
     @apply bg-dark/80 backdrop-blur-md;
   }
+
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Hide scrollbar for mobile bottom nav */
+  @media (max-width: 1024px) {
+    body {
+      padding-bottom: 120px;
+    }
+  }
+}
+
+/* Lazy Loading Image Effect */
+.lazy_img {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.lazy_img.loaded {
+  opacity: 1;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #13141a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0f1015;
 }

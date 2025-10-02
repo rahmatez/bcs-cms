@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-
+import { PageHeroSlider } from "@/components/page-hero-slider";
 import { listProducts } from "@/server/services/store";
 
 export default async function StorePage({
@@ -13,13 +13,14 @@ export default async function StorePage({
   type Product = (typeof items)[number];
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8 px-4 pb-16 pt-10 lg:px-0">
-      <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-semibold text-neutral-900">Merchandise Official BCS</h1>
-        <p className="text-sm text-neutral-600">
-          Dukung klub kebanggaanmu dengan ragam merchandise eksklusif, siap dikirim ke seluruh Indonesia.
-        </p>
-      </div>
+    <>
+      <PageHeroSlider
+        title="Official Merchandise"
+        subtitle="Dukung klub kebanggaanmu dengan ragam merchandise eksklusif"
+        height="medium"
+      />
+      
+      <div className="mx-auto max-w-5xl space-y-8 px-4 pb-16 pt-10 lg:px-0">
 
       <form className="mx-auto flex w-full max-w-md gap-2">
         <input
@@ -27,16 +28,16 @@ export default async function StorePage({
           type="search"
           defaultValue={query}
           placeholder="Cari produk"
-          className="w-full rounded-md border border-neutral-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+          className="w-full rounded-md border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-white placeholder:text-neutral-500 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
         />
-        <button type="submit" className="button-base bg-primary text-primary-foreground">
+        <button type="submit" className="button-base bg-primary text-white hover:bg-primary-600">
           Cari
         </button>
       </form>
 
       {query && (
-        <p className="text-sm text-neutral-500">
-          Hasil pencarian untuk: <span className="font-medium text-neutral-700">{query}</span>
+        <p className="text-sm text-neutral-400">
+          Hasil pencarian untuk: <span className="font-medium text-white">{query}</span>
         </p>
       )}
 
@@ -45,7 +46,7 @@ export default async function StorePage({
           <Link
             key={product.id}
             href={`/store/${product.slug}`}
-            className="group flex flex-col rounded-2xl border border-neutral-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-lg"
+            className="group flex flex-col rounded-2xl border border-neutral-700 bg-neutral-800 shadow-sm transition hover:-translate-y-1 hover:border-primary hover:shadow-lg"
           >
             {product.coverUrl ? (
               <div className="relative h-48 w-full overflow-hidden rounded-t-2xl">
@@ -58,18 +59,18 @@ export default async function StorePage({
                 />
               </div>
             ) : (
-              <div className="flex h-48 items-center justify-center rounded-t-2xl bg-neutral-100 text-sm text-neutral-500">
+              <div className="flex h-48 items-center justify-center rounded-t-2xl bg-neutral-700 text-sm text-neutral-400">
                 Tidak ada gambar
               </div>
             )}
             <div className="flex flex-1 flex-col gap-3 p-5">
               <div>
-                <h2 className="text-lg font-semibold text-neutral-900">{product.name}</h2>
-                <p className="mt-1 line-clamp-2 text-sm text-neutral-600">{product.description}</p>
+                <h2 className="text-lg font-semibold text-white">{product.name}</h2>
+                <p className="mt-1 line-clamp-2 text-sm text-neutral-400">{product.description}</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wider text-neutral-400">Mulai dari</p>
-                <p className="text-xl font-bold text-primary">
+                <p className="text-xs uppercase tracking-wider text-neutral-500">Mulai dari</p>
+                <p className="text-xl font-bold text-secondary-600">
                   {new Intl.NumberFormat("id-ID", {
                     style: "currency",
                     currency: "IDR",
@@ -83,10 +84,11 @@ export default async function StorePage({
       </div>
 
       {items.length === 0 && (
-        <p className="text-center text-sm text-neutral-500">
+        <p className="text-center text-sm text-neutral-400">
           Merchandise belum tersedia atau pencarian tidak ditemukan. Silakan kembali lagi nanti!
         </p>
       )}
-    </div>
+      </div>
+    </>
   );
 }

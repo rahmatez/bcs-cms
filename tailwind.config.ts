@@ -11,28 +11,42 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#FFD700",
-          foreground: "#000000",
-          50: "#FFFEF0",
-          100: "#FFFBD1",
-          200: "#FFF7A3",
-          300: "#FFF275",
-          400: "#FFED47",
-          500: "#FFD700",
-          600: "#E6C200",
-          700: "#B89700",
-          800: "#8A6C00",
-          900: "#5C4100"
+          DEFAULT: "#13141a",
+          foreground: "#ffffff",
+          50: "#f8f8f9",
+          100: "#e8e8ea",
+          200: "#d1d2d5",
+          300: "#a3a5ab",
+          400: "#757881",
+          500: "#474b57",
+          600: "#13141a",
+          700: "#0f1015",
+          800: "#0b0c10",
+          900: "#07080b"
+        },
+        secondary: {
+          DEFAULT: "#FF6B35",
+          foreground: "#ffffff",
+          50: "#fff4f0",
+          100: "#ffe9e0",
+          200: "#ffd3c1",
+          300: "#ffbda2",
+          400: "#ffa783",
+          500: "#ff9164",
+          600: "#FF6B35",
+          700: "#e65520",
+          800: "#b84219",
+          900: "#8a3113"
         },
         accent: {
           DEFAULT: "#000000",
-          foreground: "#FFD700"
+          foreground: "#ffffff"
         },
         dark: {
-          DEFAULT: "#0A0A0A",
-          100: "#1A1A1A",
-          200: "#2A2A2A",
-          300: "#3A3A3A"
+          DEFAULT: "#1c1e4a",
+          100: "#2c2e5a",
+          200: "#3c3e6a",
+          300: "#4c4e7a"
         }
       },
       fontFamily: {
